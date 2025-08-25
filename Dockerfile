@@ -2,6 +2,7 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY . .
+WORKDIR /app/PocketPulse-v1.0
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime
