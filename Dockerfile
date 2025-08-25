@@ -1,12 +1,11 @@
-# --- Build Stage ---
 FROM maven:3.8.5-openjdk-17 AS build
-WORKDIR /PocketPulse
+WORKDIR /app
 COPY . .
+WORKDIR /app/PocketPulse-v1.0
 RUN mvn clean package
 
-# --- Run Stage ---
 FROM eclipse-temurin:21-jre
-WORKDIR /PocketPulse
-COPY --from=build /app/target/PocketPulse-0.0.1-SNAPSHOT.jar PocketPulse-v1.0.jar
+WORKDIR /app
+COPY --from=build /app/PocketPulse-v1.0/target/PocketPulse-0.0.1-SNAPSHOT.jar PocketPulse-v1.0.jar
 EXPOSE 9090
 ENTRYPOINT ["java", "-jar", "PocketPulse-v1.0.jar"]
